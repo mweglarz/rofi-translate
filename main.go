@@ -1,7 +1,10 @@
 package main
 
-import "fmt"
+import (
+	"github.com/mweglarz/rofi-translate/translator"
+	"os"
+)
 
 func main() {
-	fmt.Println("vim-go")
+	translator.RunTranslateApp(os.Args)
 }
