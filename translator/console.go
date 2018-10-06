@@ -3,6 +3,7 @@ package translator
 import (
 	"errors"
 	"fmt"
+
 	"github.com/urfave/cli"
 )
 
@@ -12,6 +13,7 @@ type parameters struct {
 	text   string
 }
 
+/// entry point for console app
 func RunTranslateApp(args []string) {
 	app := cli.NewApp()
 
@@ -35,10 +37,18 @@ func RunTranslateApp(args []string) {
 
 func run(params parameters) error {
 	translator := DefaultTranslator()
-	translator.Translate(params.source, params.dest, params.text)
+	results, err := translator.Translate(params.source, params.dest, params.text)
+	if err != nil {
+		return err
+	}
+	for _, result := range results {
+		fmt.Println(result.word)
+	}
+
 	return nil
 }
 
+// TODO: move to separate class
 func parseParameters(c *cli.Context) (params parameters, err error) {
 	if !c.Args().Present() {
 		err = errors.New("Expecting text to translate")
